@@ -338,13 +338,11 @@ class Capture_Images:
         return self.current_time
 
     def write_crash_to_file(self, exception_msg):
-        print("Writing Exception --------------------------")
         crash_log_file_object = open(self.crash_log, 'a')
         time = self.get_current_time()
         crash_msg = str(time) + "-" + str(exception_msg) + "\n"
         crash_log_file_object.write(crash_msg)
         crash_log_file_object.close()
-        print("Finished WritingException --------------------------")
 
     def thread_for_mask_detection(self):
         """
@@ -355,12 +353,10 @@ class Capture_Images:
             try:
                 self.loop_over_frames()
             except Exception:
-                print("Exception Caught --------------------------")
                 self.write_crash_to_file(sys.exc_info()[0])
-                print("Done writing Exception --------------------------")
             finally:
                 self.clean_up()
 
 
 if __name__ == "__main__":
-    Capture_Images.perform_job(preferableTarget=cv2.dnn.DNN_TARGET_MYRIAD)
+    Capture_Images.perform_job(preferableTarget=cv2.dnn.DNN_TARGET_CPU)
