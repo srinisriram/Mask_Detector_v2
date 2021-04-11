@@ -9,3 +9,4 @@
 14:42:48-<class 'cv2.error'>
 14:42:55-<class 'cv2.error'>
 14:43:01-<class 'cv2.error'>
+15:57:08-<class 'AttributeError'>

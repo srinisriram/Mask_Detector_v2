@@ -53,6 +53,7 @@ class Capture_Images:
         self.time = ""
         self.seconds = None
         self.debug = False
+        self.use_graphics = USE_GRAPHICS
 
         self.fps_instance = FPS()
         self.fps_instance.start()
@@ -297,11 +298,12 @@ class Capture_Images:
                             self.save_img(frame=self.face, folder_path=without_mask_face_folder)
                             self.save_img(frame=self.frame, folder_path=without_mask_full_folder)
                             self.play_audio()
-                        self.create_frame_icons()
-                        cv2.rectangle(self.frame, (self.startX, self.startY), (self.endX, self.endY),
-                                      COLORS[self.colorIndex], 2)
-                        cv2.putText(self.frame, self.text, (self.startX, self.y), cv2.FONT_HERSHEY_SIMPLEX, 0.45,
-                                    COLORS[self.colorIndex], 2)
+                        if self.use_graphics:
+                            self.create_frame_icons()
+                            cv2.rectangle(self.frame, (self.startX, self.startY), (self.endX, self.endY),
+                                          COLORS[self.colorIndex], 2)
+                            cv2.putText(self.frame, self.text, (self.startX, self.y), cv2.FONT_HERSHEY_SIMPLEX, 0.45,
+                                        COLORS[self.colorIndex], 2)
             if OPEN_DISPLAY:
                 print("[FPS] ", self.fps_instance.fps)
 
