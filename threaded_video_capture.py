@@ -8,6 +8,7 @@ class Threaded_Video_Stream:
         self.src = 0
         self.stream = cv2.VideoCapture(self.src)
         (self.grabbed, self.frame) = self.stream.read()
+        print("Printing self.frame", self.frame)
         # initialize the frame and the variable used to indicate
         # if the thread should be stopped
         self.frame = None
@@ -28,6 +29,7 @@ class Threaded_Video_Stream:
                 return
             # otherwise, read the next frame from the stream
             (self.grabbed, self.frame) = self.stream.read()
+            print("Printing self.frame", self.frame)
 
     def read(self):
         print("Starting read function")
