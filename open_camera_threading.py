@@ -6,12 +6,13 @@ from Production.frames_per_second import FPS
 
 print("[INFO] Started Video Stream")
 display = True
-vs = Threaded_Video_Stream().start()
+vs = Threaded_Video_Stream()
+vs.start()
 fps = FPS().start()
 
 while True:
     print("Reading Frame")
-    frame = Threaded_Video_Stream().read()
+    frame = vs.read()
     print("Frame: \n\n", frame)
     frame = cv2.resize(frame, (320, 320), interpolation=cv2.INTER_CUBIC)
     if display:

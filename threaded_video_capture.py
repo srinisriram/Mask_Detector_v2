@@ -18,7 +18,7 @@ class Threaded_Video_Stream:
         print("Starting start function")
         # start the thread to read frames from the video stream
         Thread(target=self.update, args=()).start()
-        return self
+        # return self
 
     def update(self):
         print("Starting update function")
