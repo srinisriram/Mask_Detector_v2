@@ -2,13 +2,15 @@
 from threading import Thread
 import cv2
 from collections import deque
-
+import time
 
 class WebcamVideoStream:
     def __init__(self, src=0, name="WebcamVideoStream"):
         # initialize the video camera stream and read the first frame
         # from the stream
         self.stream = cv2.VideoCapture(src)
+        print("Warming up camera stream for 5 seconds...")
+        time.sleep(5)
         (self.grabbed, self.image) = self.stream.read()
         self.frame_list = deque([])
         self.frame = None
