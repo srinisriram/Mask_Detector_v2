@@ -7,6 +7,7 @@ import imutils
 import time
 import cv2
 from threaded_video_capture import Threaded_Video_Stream
+from Production.frames_per_second import FPS
 
 print("Setting up Video Stream")
 display = True
