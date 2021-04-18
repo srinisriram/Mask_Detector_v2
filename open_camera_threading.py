@@ -17,8 +17,8 @@ fps = FPS().start()
 while True:
 	frame = vs.read()
 	frame = imutils.resize(frame, width=320)
-    fps.update()
-    print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
+	fps.update()
+	print("[INFO] approx. FPS: {:.2f}".format(fps.fps()))
 	if display:
 		cv2.imshow("Frame", frame)
 		key = cv2.waitKey(1) & 0xFF
