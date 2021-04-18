@@ -9,9 +9,9 @@ class Threaded_Video_Stream:
         self.resolution = (320, 240)
         self.framerate = 32
         self.camera = PiCamera()
-        self.camera.resolution = resolution
+        self.camera.resolution = self.resolution
         self.camera.framerate = framerate
-        self.rawCapture = PiRGBArray(self.camera, size=resolution)
+        self.rawCapture = PiRGBArray(self.camera, size=self.resolution)
         self.stream = self.camera.capture_continuous(self.rawCapture,
                                                      format="bgr", use_video_port=True)
         # initialize the frame and the variable used to indicate
