@@ -11,7 +11,7 @@ fps = FPS().start()
 
 while True:
     print("Reading Frame")
-    frame = vs.read()
+    frame = Threaded_Video_Stream().read()
     print("Frame: \n\n", frame)
     frame = cv2.resize(frame, (320, 320), interpolation=cv2.INTER_CUBIC)
     if display:
