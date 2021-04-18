@@ -6,7 +6,7 @@ from Production.frames_per_second import FPS
 
 print("[INFO] Started Video Stream")
 display = True
-vs = Threaded_Video_Stream(src=0).start()
+vs = Threaded_Video_Stream().start()
 fps = FPS().start()
 
 while True:
