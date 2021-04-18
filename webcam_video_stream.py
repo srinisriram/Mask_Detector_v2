@@ -41,7 +41,7 @@ class WebcamVideoStream:
     def read(self):
         if len(self.frame_list) != 0:
             self.frame = self.frame_list.popleft()
-            return self.image
+            return self.frame
         else:
             pass
 
