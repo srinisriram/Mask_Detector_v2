@@ -10,7 +10,7 @@ import numpy as np
 from Production.constants import *
 from Production.play_audio import PlayAudio
 from Production.frames_per_second import FPS
-from imutils.video import VideoStream
+from imutils.video import WebcamVideoStream
 
 
 class Capture_Images:
