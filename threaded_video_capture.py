@@ -29,11 +29,11 @@ class Threaded_Video_Stream:
                 return
             # otherwise, read the next frame from the stream
             (self.grabbed, self.frame) = self.stream.read()
-            print("Printing self.frame", self.frame)
 
     def read(self):
         print("Starting read function")
         # return the frame most recently read
+        print("Printing self.frame:\n", self.frame)
         return self.frame
 
     def stop(self):
