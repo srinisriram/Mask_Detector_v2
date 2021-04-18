@@ -11,7 +11,7 @@ fps = FPS().start()
 
 while True:
     frame = vs.read()
-    frame = imutils.resize(frame, width=400)
+    frame = cv2.resize(frame, (320, 320), interpolation=cv2.INTER_CUBIC)
     if display:
         cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF
