@@ -15,6 +15,7 @@ class WebcamVideoStream:
         (self.grabbed, self.image) = self.stream.read()
         self.frame_list = []
         self.frame = None
+        self.count = 0
 
         # initialize the thread name
         self.name = name
@@ -39,7 +40,8 @@ class WebcamVideoStream:
 
             # otherwise, read the next frame from the stream
             (self.grabbed, self.image) = self.stream.read()
-            print("Appending image to list")
+            print("Appending image to list, count: ", count)
+            self.count += 1
             self.frame_list.append(self.image)
 
     def read(self):
