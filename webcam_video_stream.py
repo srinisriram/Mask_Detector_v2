@@ -39,6 +39,7 @@ class WebcamVideoStream:
 
             # otherwise, read the next frame from the stream
             (self.grabbed, self.image) = self.stream.read()
+            print("Appending image to list")
             self.frame_list.append(self.image)
 
     def read(self):
