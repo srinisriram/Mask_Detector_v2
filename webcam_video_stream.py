@@ -4,6 +4,7 @@ import cv2
 from collections import deque
 import time
 
+
 class WebcamVideoStream:
     def __init__(self, src=0, name="WebcamVideoStream"):
         # initialize the video camera stream and read the first frame

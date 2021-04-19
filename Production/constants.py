@@ -6,7 +6,7 @@ model_path = "Production/face_detection_model/res10_300x300_ssd_iter_140000.caff
 
 mask_model_path = "April_2nd_detector.onnx"
 
-sound_file = "mask_warning_1.wav"
+sound_file = "Production/mask_warning_1.wav"
 
 MIN_CONFIDENCE = 0.8
 
@@ -18,7 +18,7 @@ OPEN_DISPLAY = True
 
 USE_VIDEO = True
 
-USE_GRAPHICS = False
+USE_GRAPHICS = True
 
 VID_CAM_INDEX = 0
 

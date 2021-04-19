@@ -1,12 +1,4 @@
-12:33:00-Error
-12:34:00-Error
-12:35:00-Error
-12:36:00-Error
-12:37:00-Error
-12:38:00-Error
-14:42:08-<class 'cv2.error'>
-14:42:35-<class 'cv2.error'>
-14:42:48-<class 'cv2.error'>
-14:42:55-<class 'cv2.error'>
-14:43:01-<class 'cv2.error'>
-15:57:08-<class 'AttributeError'>
+23:25:59-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
+23:27:05-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
+23:28:08-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
+23:29:29-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'

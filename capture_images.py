@@ -11,6 +11,8 @@ from Production.constants import *
 from Production.play_audio import PlayAudio
 from Production.frames_per_second import FPS
 from imutils.video import WebcamVideoStream
+from webcam_video_stream import WebcamVideoStream
+from pygame import mixer
 
 
 class Capture_Images:
@@ -53,13 +55,19 @@ class Capture_Images:
         self.time = ""
         self.seconds = None
         self.debug = False
+        self.sound_thread = None
         self.use_graphics = USE_GRAPHICS
+        self.voice = None
+        self.sound = None
 
         self.fps_instance = FPS()
         self.fps_instance.start()
         self.fps_instance.stop()
+        self.fps_instance.start()
         self.load_caffe_model()
         self.load_pytorch_model()
+        self.init_audio()
+        # self.create_play_audio_thread()
         self.initialize_camera()
 
     @classmethod
@@ -122,8 +130,8 @@ class Capture_Images:
         :key
         """
         if Capture_Images.input_video_file_path is None:
-            print("[INFO] starting video stream...")
-            self.vs = VideoStream(src=VID_CAM_INDEX).start()
+            print("[INFO] starting threaded video stream...")
+            self.vs = WebcamVideoStream(src=0).start()
             print("[INFO] Waiting 2 Seconds...")
             time.sleep(SLEEP_TIME_AMOUNT)
         else:
@@ -134,7 +142,6 @@ class Capture_Images:
         This function extracts the next frame from the video stream.
         :return:
         """
-        self.fps_instance.update()
         if Capture_Images.input_video_file_path is None:
             self.frame = self.vs.read()
         else:
@@ -142,8 +149,9 @@ class Capture_Images:
             # self.frame = cv2.rotate(self.frame, cv2.ROTATE_180)
 
         if self.frame is None:
-            return
-        self.frame = imutils.resize(self.frame, width=frame_width_in_pixels)
+            pass
+        else:
+            self.frame = imutils.resize(self.frame, width=frame_width_in_pixels)
 
     def set_dimensions_for_frame(self):
         """
@@ -151,7 +159,6 @@ class Capture_Images:
         :key
         """
         if not self.h or not self.w:
-            # Set frame dimensions.
             (self.h, self.w) = self.frame.shape[:2]
 
     def create_frame_blob(self):
@@ -168,7 +175,6 @@ class Capture_Images:
         This function will extract each face detection that our face detection model provides.
         :return:
         """
-
         self.detector.setInput(self.image_blob)
         self.detections = self.detector.forward()
 
@@ -241,19 +247,27 @@ class Capture_Images:
         else:
             pass
 
+    def init_audio(self):
+        mixer.init()
+        mixer.set_num_channels(8)
+        self.voice = mixer.Channel(5)
+        self.sound = mixer.Sound(sound_file)
+
     def play_audio(self):
         """
         This function is used for playing the alarm if a person is not wearing a mask.
         :return:
         """
-        self.SoundThread = threading.Thread(target=PlayAudio.play_audio_file)
-        print("[INFO]: Starting Sound Thread")
-        if not self.AudioPlay:
-            self.AudioPlay = True
-            self.SoundThread.start()
-            time.sleep(3)
-            self.AudioPlay = False
-            print("[INFO]: Stopping Sound Thread")
+        if not self.voice.get_busy():
+            self.voice.play(self.sound)
+        else:
+            pass
+
+    def create_play_audio_thread(self):
+        """
+        This function is used for creating a thread for the audio playing so that there won't be a blocking call.
+        """
+        self.sound_thread = threading.Thread(target=self.play_audio)
 
     def create_frame_icons(self):
         """
@@ -271,47 +285,52 @@ class Capture_Images:
         """
         while Capture_Images.run_program:
             self.grab_next_frame()
-            self.set_dimensions_for_frame()
-            self.create_frame_blob()
-            self.extract_face_detections()
+            if self.frame is None:
+                pass
+            else:
+                self.set_dimensions_for_frame()
+                self.create_frame_blob()
+                self.extract_face_detections()
 
-            for i in range(0, self.detections.shape[2]):
-                self.extract_confidence_from_face_detections(i)
-                if self.confidence > MIN_CONFIDENCE:
-                    self.create_face_box(i)
-                    self.extract_face_roi()
-                    if self.f_w < 20 or self.f_h < 20:
-                        continue
-                    if self.is_blur(self.face, self.threshold):
-                        continue
-                    else:
-                        self.super_res(self.face)
-                        self.create_predictions_blob()
-                        self.extract_detections()
-                        self.perform_classification()
-                        if self.name == "With Mask":
-                            print("[Prediction] Person is wearing a mask.")
-                            self.save_img(frame=self.frame, folder_path=mask_full_folder)
-                            self.save_img(frame=self.face, folder_path=mask_face_folder)
-                        if self.name == "Without Mask":
-                            print("[Prediction] Person is not wearing a mask.")
-                            self.save_img(frame=self.face, folder_path=without_mask_face_folder)
-                            self.save_img(frame=self.frame, folder_path=without_mask_full_folder)
-                            self.play_audio()
-                        if self.use_graphics:
-                            self.create_frame_icons()
-                            cv2.rectangle(self.frame, (self.startX, self.startY), (self.endX, self.endY),
-                                          COLORS[self.colorIndex], 2)
-                            cv2.putText(self.frame, self.text, (self.startX, self.y), cv2.FONT_HERSHEY_SIMPLEX, 0.45,
-                                        COLORS[self.colorIndex], 2)
-            if OPEN_DISPLAY:
-                print("[FPS] ", self.fps_instance.fps)
+                for i in range(0, self.detections.shape[2]):
+                    self.extract_confidence_from_face_detections(i)
+                    if self.confidence > MIN_CONFIDENCE:
+                        self.create_face_box(i)
+                        self.extract_face_roi()
+                        if self.f_w < 20 or self.f_h < 20:
+                            continue
+                        if self.is_blur(self.face, self.threshold):
+                            continue
+                        else:
+                            self.super_res(self.face)
+                            self.create_predictions_blob()
+                            self.extract_detections()
+                            self.perform_classification()
+                            if self.name == "With Mask":
+                                print("[Prediction] Person is wearing a mask.")
+                                self.save_img(frame=self.frame, folder_path=mask_full_folder)
+                                self.save_img(frame=self.face, folder_path=mask_face_folder)
+                            if self.name == "Without Mask":
+                                print("[Prediction] Person is not wearing a mask.")
+                                self.save_img(frame=self.face, folder_path=without_mask_face_folder)
+                                self.save_img(frame=self.frame, folder_path=without_mask_full_folder)
+                                self.play_audio()
+                            if self.use_graphics:
+                                self.create_frame_icons()
+                                cv2.rectangle(self.frame, (self.startX, self.startY), (self.endX, self.endY),
+                                              COLORS[self.colorIndex], 2)
+                                cv2.putText(self.frame, self.text, (self.startX, self.y), cv2.FONT_HERSHEY_SIMPLEX,
+                                            0.45,
+                                            COLORS[self.colorIndex], 2)
+                self.fps_instance.update()
+                if OPEN_DISPLAY:
+                    print("[FPS] ", self.fps_instance.fps)
 
-                cv2.imshow("mask_detector_frame", self.frame)
-                key = cv2.waitKey(1) & 0xFF
+                    cv2.imshow("mask_detector_frame", self.frame)
+                    key = cv2.waitKey(1) & 0xFF
 
-                if key == ord('q'):
-                    break
+                    if key == ord('q'):
+                        break
 
     def clean_up(self):
         """
@@ -319,10 +338,10 @@ class Capture_Images:
         :return:
         """
         cv2.destroyAllWindows()
-        self.vs.release()
+        # self.vs.release()
         self.fps_instance.stop()
-        print("elapsed time: {:.2f}".format(self.fps_instance.elapsed()))
-        print("approx. FPS: {:.2f}".format(self.fps_instance.fps()))
+        print("elapsed time: ", self.fps_instance.elapsed())
+        print("approx. FPS: ", self.fps_instance.fps())
 
     def get_current_time(self):
         self.current_time = str(datetime.datetime.now()).split(" ")
@@ -351,14 +370,13 @@ class Capture_Images:
         Callable function that will run the mask detector and can be invoked in a thread.
         :return:
         """
-        while Capture_Images.run_program:
-            try:
-                self.loop_over_frames()
-            except Exception:
-                self.write_crash_to_file(sys.exc_info()[0])
-            finally:
-                self.clean_up()
+        try:
+            self.loop_over_frames()
+        except Exception as e:
+            self.write_crash_to_file(str(sys.exc_info()[0]) + " " + str(sys.exc_info()[1]))
+        finally:
+            self.clean_up()
 
 
 if __name__ == "__main__":
-    Capture_Images.perform_job(preferableTarget=cv2.dnn.DNN_TARGET_MYRIAD)
+    Capture_Images.perform_job(preferableTarget=cv2.dnn.DNN_TARGET_CPU)

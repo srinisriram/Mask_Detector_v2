@@ -5,12 +5,10 @@ import os
 
 
 class PlayAudio:
-    """
-    This class implements the logic to play audio files.
-    """
+    def __init__(self):
+        pass
 
-    @classmethod
-    def play_audio_file(cls):
+    def play_audio_file(self):
         """
         This method implements logic to play audio file.
         :return:
