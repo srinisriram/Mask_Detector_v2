@@ -82,7 +82,6 @@ class Capture_Images:
         Capture_Images.input_video_file_path = input_video_file_path
         # Create a thread that uses the thread_for_mask_detection function and start it.
         t1 = threading.Thread(target=Capture_Images().thread_for_mask_detection)
-        t1.daemon = True
         t1.start()
 
     def is_blur(self, frame, thresh):
