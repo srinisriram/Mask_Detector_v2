@@ -27,7 +27,7 @@ class WebcamVideoStream:
     def start(self):
         # start the thread to read frames from the video stream
         t = Thread(target=self.update, name=self.name, args=())
-        t.daemon = True
+        # t.daemon = True
         t.start()
         t.join()
         return self
