@@ -2,3 +2,4 @@
 23:27:05-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
 23:28:08-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
 23:29:29-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
+10:42:58-<class 'AttributeError'> 'list' object has no attribute 'popleft'

@@ -13,7 +13,7 @@ class WebcamVideoStream:
         print("Warming up camera stream for 5 seconds...")
         time.sleep(5)
         (self.grabbed, self.image) = self.stream.read()
-        self.frame_list = deque([])
+        self.frame_list = []
         self.frame = None
 
         # initialize the thread name
@@ -43,7 +43,7 @@ class WebcamVideoStream:
 
     def read(self):
         if len(self.frame_list) != 0:
-            self.frame = self.frame_list.popleft()
+            self.frame = self.frame_list.pop(0)
             print(len(self.frame_list))
             return self.frame
         else:
