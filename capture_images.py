@@ -132,8 +132,6 @@ class Capture_Images:
         if Capture_Images.input_video_file_path is None:
             print("[INFO] starting threaded video stream...")
             self.vs = WebcamVideoStream(src=0).start()
-            print("[INFO] Waiting 2 Seconds...")
-            time.sleep(SLEEP_TIME_AMOUNT)
         else:
             self.vs = cv2.VideoCapture(Capture_Images.input_video_file_path)
 
