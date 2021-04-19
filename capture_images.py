@@ -83,7 +83,7 @@ class Capture_Images:
         # Create a thread that uses the thread_for_mask_detection function and start it.
         t1 = threading.Thread(target=Capture_Images().thread_for_mask_detection)
         t1.start()
-        t1.join()
+        # t1.join()
 
     def is_blur(self, frame, thresh):
         fm = cv2.Laplacian(frame, cv2.CV_64F).var()

@@ -29,7 +29,7 @@ class WebcamVideoStream:
         t = Thread(target=self.update, name=self.name, args=())
         # t.daemon = True
         t.start()
-        t.join()
+        # t.join()
         return self
 
     def update(self):
