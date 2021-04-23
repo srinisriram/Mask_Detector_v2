@@ -5,7 +5,7 @@ echo "Initializing Environment..." &>/home/pi/Mask.log
 source `which virtualenvwrapper.sh`
 workon openvino
 # shellcheck disable=SC1090
-source ~/openvino/openvino/bin/setupvars.sh
+source ~/openvino/bin/setupvars.sh
 echo "Testing Audio..." &>>/home/pi/Mask.log
 aplay /home/pi/test_audio.wav
 # shellcheck disable=SC2164

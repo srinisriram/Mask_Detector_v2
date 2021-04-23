@@ -379,4 +379,4 @@ class Capture_Images:
 
 
 if __name__ == "__main__":
-    Capture_Images.perform_job(preferableTarget=cv2.dnn.DNN_TARGET_CPU)
+    Capture_Images.perform_job(preferableTarget=cv2.dnn.DNN_TARGET_MYRIAD)
