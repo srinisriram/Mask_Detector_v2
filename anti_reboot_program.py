@@ -101,6 +101,8 @@ class Anti_Reboot:
                 self.loop_through_constants_file()
                 crash_email_inst = CrashReport()
                 crash_email_inst.perform_job()
+            else:
+                os.system("sudo reboot")
             if self.debug:
                 print(self.bool_counter)
 
