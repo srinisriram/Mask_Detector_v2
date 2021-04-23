@@ -70,7 +70,10 @@ class Anti_Reboot:
         os.rename('constants_copy.txt', self.constants_file_path)
 
     def check_in_range(self, time, time_range):
-        self.bool = time in time_range
+        if time in time_range:
+            self.bool = True
+        else:
+            self.bool = False
 
     def check_for_reboot(self):
         self.get_current_time()
