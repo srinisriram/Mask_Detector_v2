@@ -100,11 +100,14 @@ class Anti_Reboot:
                     self.bool_counter += 1
                 else:
                     continue
+            print("Bool counter", self.bool_counter)
+            print("Max times", self.max_num_of_times_bf_reboot)
             if self.bool_counter >= self.max_num_of_times_bf_reboot:
                 self.loop_through_constants_file()
                 crash_email_inst = CrashReport()
                 crash_email_inst.perform_job()
             else:
+                print("Rebooting")
                 os.system("sudo reboot")
             if self.debug:
                 print(self.bool_counter)

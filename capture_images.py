@@ -361,7 +361,7 @@ class Capture_Images:
     def write_crash_to_file(self, exception_msg):
         crash_log_file_object = open(self.crash_log, 'a')
         time = self.get_current_time()
-        crash_msg = str(time) + "-" + str(exception_msg) + "\n"
+        crash_msg = str(time) + "-" + str(exception_msg)
         crash_log_file_object.write(crash_msg)
         crash_log_file_object.close()
 
