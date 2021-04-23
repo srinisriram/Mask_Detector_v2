@@ -70,14 +70,16 @@ class Anti_Reboot:
         os.rename('constants_copy.txt', self.constants_file_path)
 
     def check_in_range(self, time, time_range):
-        print("Checking in range ------")
-        print(time)
-        print(time_range)
+        if self.debug:
+            print("Checking in range ------")
+            print(time)
+            print(time_range)
         if time in time_range:
             self.bool = True
         else:
             self.bool = False
-        print(self.bool)
+        if self.debug:
+            print(self.bool)
 
     def check_for_reboot(self):
         self.get_current_time()
@@ -88,10 +90,11 @@ class Anti_Reboot:
         if self.len_file >= self.max_num_of_times_bf_reboot:
             for i in reversed(range(self.len_file)):
                 self.extracted_time = self.times_list[i]
-                print(self.times_list)
-                print("For Loop")
-                print(self.extracted_time)
-                print(self.time_range)
+                if self.debug:
+                    print(self.times_list)
+                    print("For Loop")
+                    print(self.extracted_time)
+                    print(self.time_range)
                 self.check_in_range(self.extracted_time, self.time_range)
                 if self.bool:
                     self.bool_counter += 1
