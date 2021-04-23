@@ -1,5 +1,6 @@
 # import the necessary packages
 from threading import Thread
+from multiprocessing import Process
 import cv2
 from collections import deque
 import time
@@ -13,6 +14,7 @@ class WebcamVideoStream:
         print("Warming up camera stream for 5 seconds...")
         time.sleep(5)
         (self.grabbed, self.image) = self.stream.read()
+        print("First image received", self.image)
         self.frame_list = []
         self.frame = None
         self.count = 0
@@ -27,9 +29,11 @@ class WebcamVideoStream:
     def start(self):
         # start the thread to read frames from the video stream
         t = Thread(target=self.update, name=self.name, args=())
+        # p = Process(target=self.update, args=())
         # t.daemon = True
         t.start()
         # t.join()
+        # p.start()
         return self
 
     def update(self):
@@ -41,7 +45,7 @@ class WebcamVideoStream:
 
             # otherwise, read the next frame from the stream
             (self.grabbed, self.image) = self.stream.read()
-            print("Appending image to list, count: ", self.count)
+            # print("Appending image to list, count: ", self.count)
             self.count += 1
             self.frame_list.append(self.image)
 

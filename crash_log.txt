@@ -3,3 +3,5 @@
 23:28:08-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
 23:29:29-<class 'TypeError'> unsupported operand type(s) for -: 'NoneType' and 'datetime.datetime'
 10:42:58-<class 'AttributeError'> 'list' object has no attribute 'popleft'
+11:45:37-<class 'cv2.error'> OpenCV(4.5.1) /tmp/pip-req-build-ms668fyv/opencv/modules/highgui/src/window.cpp:376: error: (-215:Assertion failed) size.width>0 && size.height>0 in function 'imshow'
+
