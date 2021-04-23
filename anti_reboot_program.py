@@ -7,7 +7,7 @@ import os
 
 class Anti_Reboot:
     def __init__(self):
-        self.debug = True
+        self.debug = False
         self.seconds = None
         self.time_now = None
         self.capture_inst = Capture_Images()
@@ -70,12 +70,14 @@ class Anti_Reboot:
         os.rename('constants_copy.txt', self.constants_file_path)
 
     def check_in_range(self, time, time_range):
+        print("Checking in range ------")
         print(time)
         print(time_range)
         if time in time_range:
             self.bool = True
         else:
             self.bool = False
+        print(self.bool)
 
     def check_for_reboot(self):
         self.get_current_time()
