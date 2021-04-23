@@ -88,6 +88,10 @@ class Anti_Reboot:
         if self.len_file >= self.max_num_of_times_bf_reboot:
             for i in reversed(range(self.len_file)):
                 self.extracted_time = self.times_list[i]
+                print(self.times_list)
+                print("For Loop")
+                print(self.extracted_time)
+                print(self.time_range)
                 self.check_in_range(self.extracted_time, self.time_range)
                 if self.bool:
                     self.bool_counter += 1
